@@ -1,10 +1,18 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-{/* import { HelloWave } from '@/components/HelloWave'; */}
+import { Image, StyleSheet, Text, Modal, View, Button} from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Calendar, DateData } from 'react-native-calendars';
 
 export default function HomeScreen() {
+
+  const [open, setOpen] = useState(false); //Open and close the calendar
+
+  function handleOpen() {
+    setOpen(!open);
+  }
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -16,10 +24,37 @@ export default function HomeScreen() {
       }>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome! To the Event App</ThemedText>
-      { /* <HelloWave /> */ }
-      { /* É assim que se faz cometários */ } 
-
       </ThemedView>
+
+      <button style={styles.button} onClick={handleOpen}>
+        <Text style={styles.buttonText}>Open Calender</Text>
+      </button>
+
+      <Modal
+      animationType='slide'
+      transparent={true}
+      visible={open}>
+        <View style={styles.centerView}>
+          <View style={styles.modalView}>
+
+          <ThemedView style={styles.calendarContainer}>
+            <Calendar 
+              onDayPress={(day: DateData) => console.log('Selected day:', day)}
+              markedDates={{ 
+              '25/02/2025': {selected: true, marked: true, selectedColor: 'blue'},
+              }}
+            />
+          </ThemedView>
+
+          <button style={styles.button} onClick={handleOpen}>
+        <Text style={styles.buttonText}>Close Calender</Text>
+      </button>
+
+          </View>
+        </View>
+      </Modal>
+
+       
     </ParallaxScrollView>
   );
 }
@@ -30,10 +65,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
   reactLogo: {
     height: 178,
     width: 290,
@@ -41,4 +72,44 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
   },
+  calendarContainer: {
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    elevation: 3,
+  },
+  centerView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    width: '80%',
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    marginTop: 10,
+    height: 50,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    backgroundColor: '#007bff',
+},
+buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+},
 });
