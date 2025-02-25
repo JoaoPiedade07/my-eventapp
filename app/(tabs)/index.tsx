@@ -1,5 +1,4 @@
 import { Image, StyleSheet, Platform } from 'react-native';
-
 {/* import { HelloWave } from '@/components/HelloWave'; */}
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -18,7 +17,9 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome! To the Event App</ThemedText>
       { /* <HelloWave /> */ }
-      { /* É assim que se faz cometários */ }  
+      { /* É assim que se faz cometários */ } 
+      
+
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
