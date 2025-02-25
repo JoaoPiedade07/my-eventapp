@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, Button, TextInput } from 'react-native';
+import { Image, StyleSheet, Platform, Button, TextInput, Text } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -23,7 +23,6 @@ export default function LoginScreen() {
             </ThemedView>
 
             {/* Campos de entrada de dados */}
-
             <ThemedView style={styles.formContainer}>
                 <TextInput
                     style={styles.input}
@@ -44,7 +43,12 @@ export default function LoginScreen() {
                     onChangeText={setPassword}
                 />
 
-                <button title="Login" onProgress={ () => console.log(`Email: ${email}, Password: ${password}`)} />
+                {/* Botão para o Login */}
+                
+                
+                <button style={styles.button} title="Login" onProgress={ () => console.log(`Email: ${email}, Password: ${password}`)}>
+                    <Text style={styles.buttonText}>Log In</Text>
+                </button>
             </ThemedView>
         </ParallaxScrollView>
     );
@@ -79,5 +83,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         fontSize: 16,
         backgroundColor: '#fff',
+    },
+    button: {
+        height: 50,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        backgroundColor: '#007bff',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
