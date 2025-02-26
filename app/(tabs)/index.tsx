@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, Modal, View, Button} from 'react-native';
+import { Image, StyleSheet, Text, Modal, View, FlatList} from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
@@ -6,6 +6,13 @@ import { ThemedView } from '@/components/ThemedView';
 import { Calendar, DateData } from 'react-native-calendars';
 
 export default function HomeScreen() {
+
+  const dados = [
+    {id: '1', nome: 'Evento 1 - Conferência de Programação'},
+    {id: '2', nome: 'Evento 2 - Taste Wine'},
+    {id: '3', nome: 'Evento 3 - Meetup'},
+    {id: '4', nome: 'Evento 4 - Hackathon'},
+  ];
 
   const [open, setOpen] = useState(false); //Open and close the calendar
 
@@ -25,7 +32,17 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome! To the Event App</ThemedText>
       </ThemedView>
-
+      <View style={styles.container}>
+        <FlatList
+        data={dados}
+        keyExtractor={(item) => item.id}
+        renderItem = {({item}) => (
+          <View style={styles.item}>
+            <Text>{item.nome}</Text>
+          </View>
+        )}
+        />
+      </View>
       <button style={styles.button} onClick={handleOpen}>
         <Text style={styles.buttonText}>Open Calender</Text>
       </button>
@@ -64,6 +81,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    marginTop: 8,
+  },
+  item: {
+    padding: 15,
+    marginVertical: 5,
+    backgroundColor: '#ddd',
+    borderRadius: 5,
   },
   reactLogo: {
     height: 178,
