@@ -8,10 +8,10 @@ import { Calendar, DateData } from 'react-native-calendars';
 export default function HomeScreen() {
 
   const dados = [
-    {id: '1', nome: 'Evento 1 - Conferência de Programação'},
-    {id: '2', nome: 'Evento 2 - Taste Wine'},
-    {id: '3', nome: 'Evento 3 - Meetup'},
-    {id: '4', nome: 'Evento 4 - Hackathon'},
+    {id: '1', nome: 'Conferência de Programação'},
+    {id: '2', nome: 'Taste Wine'},
+    {id: '3', nome: 'Meetup'},
+    {id: '4', nome: 'Hackathon'},
   ];
 
   const [open, setOpen] = useState(false); //Open and close the calendar
@@ -32,17 +32,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome! To the Event App</ThemedText>
       </ThemedView>
-      <View style={styles.container}>
-        <FlatList
-        data={dados}
-        keyExtractor={(item) => item.id}
-        renderItem = {({item}) => (
-          <View style={styles.item}>
-            <Text>{item.nome}</Text>
-          </View>
-        )}
-        />
-      </View>
+
       <button style={styles.button} onClick={handleOpen}>
         <Text style={styles.buttonText}>Open Calender</Text>
       </button>
@@ -70,8 +60,19 @@ export default function HomeScreen() {
           </View>
         </View>
       </Modal>
-
-       
+      
+      <View style={styles.container}>
+        <FlatList
+        data={dados}
+        keyExtractor={(item) => item.id}
+        renderItem = {({item}) => (
+          <View style={styles.item}>
+            <Text style={styles.text}>{item.nome}</Text>
+          </View>
+        )}
+        />
+      </View>
+     
     </ParallaxScrollView>
   );
 }
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
+    padding: 5,
     marginTop: 8,
   },
   item: {
@@ -134,10 +135,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     backgroundColor: '#007bff',
-},
-buttonText: {
-    color: '#fff',
+  },
+  buttonText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'bold',
+  },
+  text: {
+    color: 'black',
     fontSize: 16,
-    fontWeight: 'bold',
-},
+  }
 });
