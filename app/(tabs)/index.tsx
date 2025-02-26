@@ -1,5 +1,4 @@
-import { Image, StyleSheet, Text, Modal, View, FlatList, TouchableOpacity} from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { Image, StyleSheet, Text, Modal, View, FlatList, TouchableOpacity, ScrollView} from 'react-native';
 import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -21,14 +20,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+    <ScrollView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome! To the Event App</ThemedText>
       </ThemedView>
@@ -73,7 +65,7 @@ export default function HomeScreen() {
         />
       </View>
      
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
 
