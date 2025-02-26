@@ -1,14 +1,45 @@
-import { StyleSheet, TextInput, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createTable, getUsers} from '@/app/database';
+
+
+interface User {
+    id: number;
+    email: string;
+    password: string;
+}
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        console.log("Criando/verificando tabela...");
+        createTable();
+        console.log("Tabela de usuários verificada/criada!");
+    }, []);
+
+    const handleLogin = () => {
+        console.log("Tentando logar com o email:", email);
+        getUsers(email, (user: User | null) => {
+            if (user) {
+                console.log("Usuário encontrado:", user);
+                if (user.password === password) {
+                    Alert.alert('Login successful');
+                } else {
+                    Alert.alert('Invalid password');
+                }
+            } else {
+                console.log("Usuário não encontrado.");
+                Alert.alert('User not found');
+            }
+        });
+    };
+    
     return (
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
             <ThemedView style={styles.titleContainer}>
                 <ThemedText type="title">Welcome to the Login Screen!</ThemedText>
             </ThemedView>
@@ -35,7 +66,7 @@ export default function LoginScreen() {
                 />
 
                 {/* Botão para o Login */}
-                <TouchableOpacity style={styles.button} onPress={() => console.log(`Email: ${email}, Password: ${password}`)}>
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Log In</Text>
                 </TouchableOpacity>
             </ThemedView>

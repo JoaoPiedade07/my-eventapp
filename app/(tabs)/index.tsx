@@ -20,7 +20,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps="handled">
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome! To the Event App</ThemedText>
       </ThemedView>
@@ -40,7 +40,7 @@ export default function HomeScreen() {
             <Calendar 
               onDayPress={(day: DateData) => console.log('Selected day:', day)}
               markedDates={{ 
-              '25/02/2025': {selected: true, marked: true, selectedColor: 'blue'},
+              '25-02-2025': {selected: true, marked: true, selectedColor: 'blue'},
               }}
             />
           </ThemedView>
@@ -55,6 +55,7 @@ export default function HomeScreen() {
       
       <View style={styles.container}>
         <FlatList
+        nestedScrollEnabled={true}
         data={dados}
         keyExtractor={(item) => item.id}
         renderItem = {({item}) => (
