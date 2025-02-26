@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, Modal, View, FlatList} from 'react-native';
+import { Image, StyleSheet, Text, Modal, View, FlatList, TouchableOpacity} from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
@@ -33,9 +33,9 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcome! To the Event App</ThemedText>
       </ThemedView>
 
-      <button style={styles.button} onClick={handleOpen}>
-        <Text style={styles.buttonText}>Open Calender</Text>
-      </button>
+      <TouchableOpacity style={styles.button} onPress={handleOpen}>
+        <Text style={styles.buttonText}>Open Calendar</Text>
+      </TouchableOpacity>
 
       <Modal
       animationType='slide'
@@ -53,9 +53,9 @@ export default function HomeScreen() {
             />
           </ThemedView>
 
-          <button style={styles.button} onClick={handleOpen}>
-        <Text style={styles.buttonText}>Close Calender</Text>
-      </button>
+          <TouchableOpacity style={styles.button} onPress={handleOpen}>
+            <Text style={styles.buttonText}>Close Calendar</Text>
+          </TouchableOpacity>
 
           </View>
         </View>
@@ -135,6 +135,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     backgroundColor: '#007bff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
       color: '#fff',
