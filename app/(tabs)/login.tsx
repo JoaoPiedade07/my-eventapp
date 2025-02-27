@@ -2,8 +2,7 @@ import { StyleSheet, TextInput, Text, TouchableOpacity, ScrollView, Alert } from
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useState, useEffect } from 'react';
-import { createTable, getUsers} from '@/app/database';
-
+import { createTable, getUserByEmail } from '@/lib/database';
 
 interface User {
     id: number;
@@ -16,35 +15,38 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        console.log("Criando/verificando tabela...");
+        console.log("📌 Criando/verificando tabela de usuários...");
         createTable();
-        console.log("Tabela de usuários verificada/criada!");
     }, []);
 
     const handleLogin = () => {
-        console.log("Tentando logar com o email:", email);
-        getUsers(email, (user: User | null) => {
+        if (!email || !password) {
+            Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+            return;
+        }
+
+        console.log("🔍 Buscando usuário com email:", email);
+        getUserByEmail(email, (user: User | null) => {
             if (user) {
-                console.log("Usuário encontrado:", user);
+                console.log("✅ Usuário encontrado:", user);
                 if (user.password === password) {
-                    Alert.alert('Login successful');
+                    Alert.alert('✅ Login realizado com sucesso!');
                 } else {
-                    Alert.alert('Invalid password');
+                    Alert.alert('❌ Senha incorreta.');
                 }
             } else {
-                console.log("Usuário não encontrado.");
-                Alert.alert('User not found');
+                console.log("⚠️ Usuário não encontrado.");
+                Alert.alert('❌ Usuário não encontrado.');
             }
         });
     };
-    
+
     return (
         <ScrollView keyboardShouldPersistTaps="handled">
             <ThemedView style={styles.titleContainer}>
-                <ThemedText type="title">Welcome to the Login Screen!</ThemedText>
+                <ThemedText type="title">Bem-vindo ao Login!</ThemedText>
             </ThemedView>
 
-            {/* Campos de entrada de dados */}
             <ThemedView style={styles.formContainer}>
                 <TextInput
                     style={styles.input}
@@ -58,16 +60,15 @@ export default function LoginScreen() {
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Password"
+                    placeholder="Senha"
                     placeholderTextColor="#888"
                     secureTextEntry
                     value={password}
                     onChangeText={setPassword}
                 />
 
-                {/* Botão para o Login */}
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Log In</Text>
+                    <Text style={styles.buttonText}>Entrar</Text>
                 </TouchableOpacity>
             </ThemedView>
         </ScrollView>
@@ -79,6 +80,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
+        marginVertical: 20,
+        justifyContent: 'center',
     },
     formContainer: {
         padding: 16,
@@ -96,7 +99,6 @@ const styles = StyleSheet.create({
     button: {
         height: 50,
         borderRadius: 8,
-        paddingHorizontal: 10,
         backgroundColor: '#007bff',
         justifyContent: 'center',
         alignItems: 'center',
